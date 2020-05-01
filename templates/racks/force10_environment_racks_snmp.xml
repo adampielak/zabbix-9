@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-01T11:38:21Z</date>
+    <groups>
+        <group>
+            <name>WorldStream Racks</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Force10 Environment Racks SNMP</template>
+            <name>Force10 Environment Racks SNMP</name>
+            <description>MIBs used:&#13;
+F10-S-SERIES-CHASSIS-MIB&#13;
+FORCE10-SMI&#13;
+F10-CHASSIS-MIB&#13;
+FORCE10-TC</description>
+            <groups>
+                <group>
+                    <name>WorldStream Racks</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Power Supply</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>PSU Status Discovery</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#PSU_NAME},F10-S-SERIES-CHASSIS-MIB::chSysPowerSupplyIndex.1]</snmp_oid>
+                    <key>psu.force10.discovery</key>
+                    <delay>{$INTERVAL_F10_ENV_RACKS}</delay>
+                    <lifetime>{$LOST_RESOURCES_F10_ENV_RACKS}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>PSU status: PowerSupply{#PSU_NAME}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>F10-S-SERIES-CHASSIS-MIB::chSysPowerSupplyIndex.1.{#SNMPINDEX}</snmp_oid>
+                            <key>sensor.psu.force10.status[entStateOper.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_F10_ENV_RACKS}</delay>
+                            <history>{$HISTORY_PERIOD_F10_ENV_RACKS}</history>
+                            <trends>0</trends>
+                            <applications>
+                                <application>
+                                    <name>Power Supply</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>F10-S-SERIES-CHASSIS-MIB::chSysPowerSupplyOperStatus</name>
+                            </valuemap>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}=2</expression>
+                                    <name>PSU is DOWN: PowerSupply{#PSU_NAME}</name>
+                                    <opdata>PSU is DOWN</opdata>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$HISTORY_PERIOD_F10_ENV_RACKS}</macro>
+                    <value>365d</value>
+                    <description>History storage period</description>
+                </macro>
+                <macro>
+                    <macro>{$INTERVAL_F10_ENV_RACKS}</macro>
+                    <value>1m</value>
+                    <description>Update interval used in items/discovery rules</description>
+                </macro>
+                <macro>
+                    <macro>{$LOST_RESOURCES_F10_ENV_RACKS}</macro>
+                    <value>30d</value>
+                    <description>Keep lost resources period</description>
+                </macro>
+                <macro>
+                    <macro>{$TREND_PERIOD_F10_ENV_RACKS}</macro>
+                    <value>1095d</value>
+                    <description>Trend storage period</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+    <value_maps>
+        <value_map>
+            <name>F10-S-SERIES-CHASSIS-MIB::chSysPowerSupplyOperStatus</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>enabled</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>disabled</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>
