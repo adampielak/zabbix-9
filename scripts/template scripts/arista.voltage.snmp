@@ -1,0 +1,7 @@
+#!/bin/bash
+# Name   : arista.voltage.snmp
+# Date   : 31-03-2020
+# Usage  : Get Voltage from Arista PSU
+number=$(snmpwalk $1 -v 2c -c $2 ENTITY-MIB::entPhysicalDescr -On 4 | tr -d '"' | grep PowerSupply1$ -A8 | grep "Input voltage sensor$" | cut -d'=' -f1 | cut -b 33-)
+snmp_oid=$(($4 + $number)) arista_snmpwalk=$(snmpwalk $1 -v 2c -c $2 $3.$snmp_oid -On 4 | awk '{$1=""; $2=""; $3=""; print $4 }')
+printf "$arista_snmpwalk"
