@@ -1,0 +1,6 @@
+#!/bin/bash
+# Name         : arista.echo.ipv4peers
+# Date         : 10-04-2020
+# Purpose      : Overcome stupid limitiation in Zabbix
+
+echo "$1"
