@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-01T11:20:01Z</date>
+    <groups>
+        <group>
+            <name>WorldStream Core</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>OSPF SNMP</template>
+            <name>OSPF SNMP</name>
+            <description>MIBs used:&#13;
+OSPF-MIB</description>
+            <groups>
+                <group>
+                    <name>WorldStream Core</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>OSPF</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>OSPF Router Admin Status</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>OSPF-MIB::ospfAdminStat.0</snmp_oid>
+                    <key>ospfAdminStat</key>
+                    <delay>{$INTERVAL_OSPF}</delay>
+                    <history>{$HISTORY_PERIOD_OSPF}</history>
+                    <trends>{$TREND_PERIOD_OSPF}</trends>
+                    <port>161</port>
+                    <applications>
+                        <application>
+                            <name>OSPF</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>SNMP OSPF Admin Status</name>
+                    </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;1</expression>
+                            <name>OSPF area: {#SNMPVALUE} is DISABLED</name>
+                            <opdata>OSPF is DISABLED</opdata>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>OSPF Router ID</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>OSPF-MIB::ospfRouterId.0</snmp_oid>
+                    <key>ospfRouterId</key>
+                    <delay>{$INTERVAL_OSPF}</delay>
+                    <history>{$HISTORY_PERIOD_OSPF}</history>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <port>161</port>
+                    <applications>
+                        <application>
+                            <name>OSPF</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>OSPF Areas</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SNMPVALUE},OSPF-MIB::ospfAreaId]</snmp_oid>
+                    <key>ospfAreaId</key>
+                    <delay>{$INTERVAL_OSPF}</delay>
+                    <port>161</port>
+                    <lifetime>{$LOST_RESOURCES_OSPF}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>OSPF status area: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>OSPF-MIB::ospfAreaStatus.{#SNMPINDEX}</snmp_oid>
+                            <key>ospfAreaStatus[{#SNMPVALUE}]</key>
+                            <delay>{$INTERVAL_OSPF}</delay>
+                            <history>{$HISTORY_PERIOD_OSPF}</history>
+                            <trends>{$TREND_PERIOD_OSPF}</trends>
+                            <port>161</port>
+                            <applications>
+                                <application>
+                                    <name>OSPF</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>SNMP OSPF Area Status</name>
+                            </valuemap>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;1</expression>
+                                    <name>OSPF Area Status</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>OSPF border routers count area: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>OSPF-MIB::ospfAsBdrRtrCount.{#SNMPINDEX}</snmp_oid>
+                            <key>ospfAsBdrRtrCount[{#SNMPVALUE}]</key>
+                            <delay>{$INTERVAL_OSPF}</delay>
+                            <history>{$HISTORY_PERIOD_OSPF}</history>
+                            <trends>{$TREND_PERIOD_OSPF}</trends>
+                            <port>161</port>
+                            <applications>
+                                <application>
+                                    <name>OSPF</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>OSPF SPF-log area: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>OSPF-MIB::ospfSpfRuns.{#SNMPINDEX}</snmp_oid>
+                            <key>ospfSpfRuns[{#SNMPVALUE}]</key>
+                            <delay>{$INTERVAL_OSPF}</delay>
+                            <history>{$HISTORY_PERIOD_OSPF}</history>
+                            <trends>{$TREND_PERIOD_OSPF}</trends>
+                            <port>161</port>
+                            <applications>
+                                <application>
+                                    <name>OSPF</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>OSPF border routers count area: {#SNMPVALUE}</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>OSPF SNMP</host>
+                                        <key>ospfAsBdrRtrCount[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>OSPF SFP-log area: {#SNMPVALUE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>BA68C8</color>
+                                    <item>
+                                        <host>OSPF SNMP</host>
+                                        <key>ospfSpfRuns[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>OSPF Interfaces</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SNMPVALUE},OSPF-MIB::ospfIfIpAddress]</snmp_oid>
+                    <key>ospfIfIpAddress</key>
+                    <delay>{$INTERVAL_OSPF}</delay>
+                    <port>161</port>
+                    <lifetime>{$LOST_RESOURCES_OSPF}</lifetime>
+                    <description>Identifies OSPF Interfaces.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>OSPF Interface Admin Status {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>OSPF-MIB::ospfIfAdminStat.{#SNMPINDEX}</snmp_oid>
+                            <key>ospfIfAdminStat[{#SNMPVALUE}]</key>
+                            <delay>{$INTERVAL_OSPF}</delay>
+                            <history>{$HISTORY_PERIOD_OSPF}</history>
+                            <trends>{$TREND_PERIOD_OSPF}</trends>
+                            <port>161</port>
+                            <applications>
+                                <application>
+                                    <name>OSPF</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>SNMP OSPF Admin Status</name>
+                            </valuemap>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;1</expression>
+                                    <name>OSPF Interface Admin Status</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>OSPF Neighbors</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SNMPVALUE},OSPF-MIB::ospfNbrIpAddr]</snmp_oid>
+                    <key>ospfNbrIpAddr</key>
+                    <delay>{$INTERVAL_OSPF}</delay>
+                    <port>161</port>
+                    <lifetime>{$LOST_RESOURCES_OSPF}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>OSPF NBMA Neighbor $1 Status</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>OSPF-MIB::ospfNbmaNbrStatus.{#SNMPVALUE}.0</snmp_oid>
+                            <key>ospfNbmaNbrStatus[{#SNMPVALUE}]</key>
+                            <delay>{$INTERVAL_OSPF}</delay>
+                            <history>{$HISTORY_PERIOD_OSPF}</history>
+                            <trends>{$TREND_PERIOD_OSPF}</trends>
+                            <port>161</port>
+                            <applications>
+                                <application>
+                                    <name>OSPF</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>SNMP OSPF Area Status</name>
+                            </valuemap>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>OSPF Neighbor $1 Router ID</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>OSPF-MIB::ospfNbrRtrId.{#SNMPVALUE}.0</snmp_oid>
+                            <key>ospfNbrRtrId[{#SNMPVALUE}]</key>
+                            <delay>{$INTERVAL_OSPF}</delay>
+                            <history>{$HISTORY_PERIOD_OSPF}</history>
+                            <trends>0</trends>
+                            <value_type>CHAR</value_type>
+                            <port>161</port>
+                            <applications>
+                                <application>
+                                    <name>OSPF</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>OSPF Neighbor $1 State</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>OSPF-MIB::ospfNbrState.{#SNMPINDEX}</snmp_oid>
+                            <key>ospfNbrState[{#SNMPVALUE}]</key>
+                            <delay>{$INTERVAL_OSPF}</delay>
+                            <history>{$HISTORY_PERIOD_OSPF}</history>
+                            <trends>{$TREND_PERIOD_OSPF}</trends>
+                            <port>161</port>
+                            <applications>
+                                <application>
+                                    <name>OSPF</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>SNMP OSPF Neighbor State (ospfNbrState)</name>
+                            </valuemap>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;8</expression>
+                                    <name>OSPF neighbor: {#SNMPVALUE}  state is CRITICAL</name>
+                                    <opdata>OSPF neighbor state is CRITICAL</opdata>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$HISTORY_PERIOD_OSPF}</macro>
+                    <value>365d</value>
+                    <description>History storage period</description>
+                </macro>
+                <macro>
+                    <macro>{$INTERVAL_OSPF}</macro>
+                    <value>1m</value>
+                    <description>Update interval used in items/discovery rules</description>
+                </macro>
+                <macro>
+                    <macro>{$LOST_RESOURCES_OSPF}</macro>
+                    <value>30d</value>
+                    <description>Keep lost resources period</description>
+                </macro>
+                <macro>
+                    <macro>{$TREND_PERIOD_OSPF}</macro>
+                    <value>1095d</value>
+                    <description>Trend storage period</description>
+                </macro>
+            </macros>
+            <screens>
+                <screen>
+                    <name>OSPF</name>
+                    <hsize>2</hsize>
+                    <vsize>100</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>3</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <key>ospfAdminStat</key>
+                                <host>OSPF SNMP</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>5</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>3</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <key>ospfRouterId</key>
+                                <host>OSPF SNMP</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>5</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>19</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <key>ospfAsBdrRtrCount[{#SNMPVALUE}]</key>
+                                <host>OSPF SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>1</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>OSPF SFP-log area: {#SNMPVALUE}</name>
+                                <host>OSPF SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>1</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>1</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+            </screens>
+        </template>
+    </templates>
+    <value_maps>
+        <value_map>
+            <name>SNMP OSPF Admin Status</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>Enabled</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>Disabled</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>SNMP OSPF Area Status</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>Active</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>Not In Service</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>Not Ready</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>Create and Go</newvalue>
+                </mapping>
+                <mapping>
+                    <value>5</value>
+                    <newvalue>Create and Wait</newvalue>
+                </mapping>
+                <mapping>
+                    <value>6</value>
+                    <newvalue>Destroy</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>SNMP OSPF Neighbor State (ospfNbrState)</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>Down</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>Attempt</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>Init</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>TwoWay</newvalue>
+                </mapping>
+                <mapping>
+                    <value>5</value>
+                    <newvalue>ExchangeStart</newvalue>
+                </mapping>
+                <mapping>
+                    <value>6</value>
+                    <newvalue>Exchange</newvalue>
+                </mapping>
+                <mapping>
+                    <value>7</value>
+                    <newvalue>Loading</newvalue>
+                </mapping>
+                <mapping>
+                    <value>8</value>
+                    <newvalue>Full</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>
