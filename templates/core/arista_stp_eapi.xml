@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-01T11:18:23Z</date>
+    <groups>
+        <group>
+            <name>WorldStream Core</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Arista STP eAPI</template>
+            <name>Arista STP eAPI</name>
+            <groups>
+                <group>
+                    <name>WorldStream Core</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Spanning Tree</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>STP Priority</name>
+                    <type>EXTERNAL</type>
+                    <key>arista.stp_priority.eapi[{HOST.CONN}]</key>
+                    <delay>{$INTERVAL_STP}</delay>
+                    <history>{$HISTORY_PERIOD_STP}</history>
+                    <trends>{$TREND_PERIOD_STP}</trends>
+                    <applications>
+                        <application>
+                            <name>Spanning Tree</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+            <macros>
+                <macro>
+                    <macro>{$HISTORY_PERIOD_STP}</macro>
+                    <value>365d</value>
+                    <description>History storage period</description>
+                </macro>
+                <macro>
+                    <macro>{$INTERVAL_STP}</macro>
+                    <value>1m</value>
+                    <description>Update interval used in items/discovery rules</description>
+                </macro>
+                <macro>
+                    <macro>{$LOST_RESOURCES_STP}</macro>
+                    <value>30d</value>
+                    <description>Keep lost resources period</description>
+                </macro>
+                <macro>
+                    <macro>{$TREND_PERIOD_STP}</macro>
+                    <value>1095d</value>
+                    <description>Trend storage period</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
