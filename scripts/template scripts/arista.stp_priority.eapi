@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+# Name     : arista.stp_priority.eapi
+# Date     : 20-04-2020
+# Purpose  : Get STP priority from switch
+import os, ssl
+import sys
+from jsonrpclib import Server
+
+# Disable SSL verification
+ssl._create_default_https_context = ssl._create_unverified_context
+
+# Do magic
+switch = Server( "https://admin:WqnAqwe23J@%s/command-api" % (sys.argv[1]))
+response = switch.runCmds( 1, ["show spanning-tree"] )
+print response[0]["spanningTreeInstances"]["MST0"]["bridge"]["priority"]
