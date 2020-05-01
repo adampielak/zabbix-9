@@ -1,0 +1,21 @@
+#!/bin/bash
+# Name         : arista.ipv6bgp.snmp
+# Date         : 09-04-2020
+# Purpose      : Get IPv6 BGP peers from Arista
+oid_walk=$(snmpwalk $1 -v 2c -c $2 ARISTA-BGP4V2-MIB::aristaBgp4V2PeerLocalAddr.1.ipv6 -On 4 | awk '{print $1}' | cut -b 31-)
+ipv6_walk=$(snmpwalk $1 -v 2c -c $2 ARISTA-BGP4V2-MIB::aristaBgp4V2PeerLocalAddr.1.ipv6 | awk '{print $1}' | tr -d '":' | sed 's/.*ipv6.//' | ipv6calc --in ifinet6 --out ipv6addr)
+
+count=$(echo "$oid_walk" | wc -l)
+printf "[\n"
+while IFS=$'\t' read -r f1 f2
+do
+  printf '\t{ "{#SNMPINDEX}":"%s' "$f1"'"',
+  printf '\t\t\t"{#SNMPVALUE}":"%s' "$f2"'"'
+  if [ $count -gt 1 ]; then
+    printf '\t\t},\n'
+    count=$[ $count - 1 ]
+  else
+    printf '\t\t}\n'
+  fi
+done < <(paste <(printf %s "$oid_walk") <(printf %s "$ipv6_walk"))
+printf "]\n"
