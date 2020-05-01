@@ -1,6 +1,6 @@
 <!-- This one is kind of tricky to import as it is host bound -->
 <!-- You need to adjust "<host>adjust_host_name</host>" with the correct hostname -->
-<!-- Also adjust name>Interface ens3f0: Network traffic</name> with the correct interface name -->
+<!-- Also adjust "name>Interface ens3f0: Network traffic</name>" with the correct interface name -->
 <!-- No guarantee that this will work  -->
 
 <?xml version="1.0" encoding="UTF-8"?>
