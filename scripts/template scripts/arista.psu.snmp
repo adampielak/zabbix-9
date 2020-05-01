@@ -1,0 +1,36 @@
+#!/bin/bash
+# Name     : arista.psu.snmp
+# Date     : 11-04-2020
+# Purpose  : Get values from individual PSU
+total_sensors_psu=$(snmpwalk $1 -v 2c -c $2 ENTITY-MIB::entPhysicalDescr | tr -d '"' | grep PowerSupply1$ -A8 | cut -d'=' -f1 | cut -d'.' -f2)
+temp_sensors_psu=$(echo "$total_sensors_psu" | while IFS= read -r line ; do snmpwalk $1 -v 2c -c $2 ENTITY-SENSOR-MIB::entPhySensorType.$line | grep 'celsius(8)' | cut -d'=' -f1 | cut -d'.' -f2; done | wc -l)
+
+psu_oids=$(snmpwalk $1 -v 2c -c $2 ENTITY-MIB::entPhysicalDescr | tr -d '"' | grep PowerSupply[0-9]$ -A8 --no-group-separator | cut -d'=' -f1 | cut -d'.' -f2)
+psu_name=$(snmpwalk $1 -v 2c -c $2 ENTITY-MIB::entPhysicalDescr | tr -d '"' | grep PowerSupply[0-9]$ | cut -b 50-)
+sedA=1 sedB=$temp_sensors_psu json_count=$temp_sensors_psu snmpindex=1 psu_count=$(echo "$psu_name" | wc -l)
+
+printf "["
+psu_sensors=$(echo "$psu_oids" | while IFS= read -r line ; do snmpwalk $1 -v 2c -c $2 ENTITY-SENSOR-MIB::entPhySensorType.$line | grep 'celsius(8)' | cut -d'=' -f1 | cut -d'.' -f2; done)
+echo "$psu_name" | while IFS= read -r fine
+do
+        printf '\n\t{ "{#SNMPVALUE}":"%s' "$fine"'"',
+echo "$psu_sensors" | sed -n $sedA','$sedB' p' | while IFS= read -r line
+do
+        if [ $json_count -gt 1 ]; then
+                printf '\t"{#SNMPINDEX_%s}":"%s''"', $snmpindex $line
+                json_count=$[ $json_count - 1]
+        else
+                printf '\t"{#SNMPINDEX_%s}":"%s''"' $snmpindex $line
+        fi
+snmpindex=$[ $snmpindex + 1]
+done
+if [ $psu_count -gt 1 ]; then
+        printf "\t\t},"
+        psu_count=$[ $psu_count -1]
+else
+        printf "\t\t}"
+fi
+sedA=$((sedA+$temp_sensors_psu))
+sedB=$((sedB+$temp_sensors_psu))
+done
+printf "\n]\n"
