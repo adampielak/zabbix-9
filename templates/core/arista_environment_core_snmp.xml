@@ -1,0 +1,1287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-01T11:17:32Z</date>
+    <groups>
+        <group>
+            <name>WorldStream Core</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Arista Environment Core SNMP</template>
+            <name>Arista Environment Core SNMP</name>
+            <description>MIBs used:&#13;
+HOST-RESOURCES-MIB&#13;
+ENTITY-SENSORS-MIB&#13;
+ENTITY-STATE-MIB&#13;
+ENTITY-MIB</description>
+            <groups>
+                <group>
+                    <name>WorldStream Core</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>CPU</name>
+                </application>
+                <application>
+                    <name>Fans</name>
+                </application>
+                <application>
+                    <name>Memory</name>
+                </application>
+                <application>
+                    <name>Power Supply</name>
+                </application>
+                <application>
+                    <name>Storage</name>
+                </application>
+                <application>
+                    <name>Temperature</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Temperature Discovery PSU</name>
+                    <type>EXTERNAL</type>
+                    <key>arista.psu.snmp[{HOST.CONN},{$SNMP_COMMUNITY}]</key>
+                    <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                    <lifetime>{$LOST_RESOURCES_ARISTA_ENV}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Temperature: {#SNMPVALUE} [1]</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>ENTITY-SENSOR-MIB::entPhySensorValue.{#SNMPINDEX_1}</snmp_oid>
+                            <key>sensor.psu.temperature[entStateOper.{#SNMPINDEX_1}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>°C</units>
+                            <applications>
+                                <application>
+                                    <name>Temperature</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <params>0.1</params>
+                                </step>
+                            </preprocessing>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$TEMP_CRIT:&quot;&quot;}</expression>
+                                    <name>Temperature is CRITICAL: {#SNMPVALUE}</name>
+                                    <opdata>Temperature is CRITICAL</opdata>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$TEMP_WARN:&quot;&quot;}</expression>
+                                    <name>Temperature is HIGH: {#SNMPVALUE}</name>
+                                    <opdata>Temperature is HIGH</opdata>
+                                    <priority>WARNING</priority>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>Temperature is CRITICAL: {#SNMPVALUE}</name>
+                                            <expression>{Arista Environment Core SNMP:sensor.psu.temperature[entStateOper.{#SNMPINDEX_1}].last()}&gt;{$TEMP_CRIT:&quot;&quot;}</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$TEMP_CRIT_LOW:&quot;&quot;}</expression>
+                                    <name>Temperature is LOW: {#SNMPVALUE}</name>
+                                    <opdata>Temperature is LOW</opdata>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Temperature: {#SNMPVALUE} [2]</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>ENTITY-SENSOR-MIB::entPhySensorValue.{#SNMPINDEX_2}</snmp_oid>
+                            <key>sensor.psu.temperature[entStateOper.{#SNMPINDEX_2}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>°C</units>
+                            <applications>
+                                <application>
+                                    <name>Temperature</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <params>0.1</params>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Temperature: {#SNMPVALUE} [3]</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>ENTITY-SENSOR-MIB::entPhySensorValue.{#SNMPINDEX_1}</snmp_oid>
+                            <key>sensor.psu.temperature[entStateOper.{#SNMPINDEX_3}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>°C</units>
+                            <applications>
+                                <application>
+                                    <name>Temperature</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <params>0.1</params>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Temperature: {#SNMPVALUE} [1]</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>199C0D</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.psu.temperature[entStateOper.{#SNMPINDEX_1}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Temperature: {#SNMPVALUE} [2]</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>199C0D</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.psu.temperature[entStateOper.{#SNMPINDEX_2}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Temperature: {#SNMPVALUE} [3]</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>199C0D</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.psu.temperature[entStateOper.{#SNMPINDEX_3}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>Fan Discovery</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.2.1.99.1.1.1.1,{#SENSOR_INFO},1.3.6.1.2.1.47.1.1.1.1.2]</snmp_oid>
+                    <key>fan.discovery</key>
+                    <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                    <filter>
+                        <evaltype>OR</evaltype>
+                        <conditions>
+                            <condition>
+                                <macro>{#SNMPVALUE}</macro>
+                                <value>10</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>{$LOST_RESOURCES_ARISTA_ENV}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Fan speed: {#SENSOR_INFO}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.99.1.1.1.4.{#SNMPINDEX}</snmp_oid>
+                            <key>sensor.fan.speed[entPhySensorValue.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <units>rpm</units>
+                            <applications>
+                                <application>
+                                    <name>Fans</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Fan status: {#SENSOR_INFO}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.99.1.1.1.5.{#SNMPINDEX}</snmp_oid>
+                            <key>sensor.fan.status[entPhySensorOperStatus.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                            <applications>
+                                <application>
+                                    <name>Fans</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>ENTITY-SENSORS-MIB::EntitySensorStatus</name>
+                            </valuemap>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{count(#1,{$FAN_CRIT_STATUS},eq)}=1</expression>
+                                    <name>Fan is DOWN: {#SENSOR_INFO}</name>
+                                    <opdata>Fan is DOWN</opdata>
+                                    <status>DISABLED</status>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Fan speed: {#SENSOR_INFO}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.fan.speed[entPhySensorValue.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Fan status: {#SENSOR_INFO}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.fan.status[entPhySensorOperStatus.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>CPU Discovery</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.2.1.25.3.2.1,{#DEVICE_TYPE},1.3.6.1.2.1.25.3.2.1.2,{#DEVICE_DESCR},1.3.6.1.2.1.25.3.2.1.3]</snmp_oid>
+                    <key>hrProcessorLoad.discovery</key>
+                    <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                    <filter>
+                        <evaltype>OR</evaltype>
+                        <conditions>
+                            <condition>
+                                <macro>{#DEVICE_TYPE}</macro>
+                                <value>.+3$</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#DEVICE_TYPE}</macro>
+                                <value>.+hrDeviceProcessor</value>
+                                <formulaid>B</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>{$LOST_RESOURCES_ARISTA_ENV}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>CPU utilization: {#DEVICE_DESCR}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.25.3.3.1.2.{#SNMPINDEX}</snmp_oid>
+                            <key>system.cpu.util[hrProcessorLoad.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>%</units>
+                            <applications>
+                                <application>
+                                    <name>CPU</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$CPU_UTIL_MAX}</expression>
+                                    <name>High CPU utilization: {#DEVICE_DESCR}</name>
+                                    <opdata>High CPU utilization</opdata>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>CPU utilization {#DEVICE_DESCR}</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <ymax_type_1>FIXED</ymax_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>system.cpu.util[hrProcessorLoad.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>Memory Discovery</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.2.1.25.2.3.1.3,{#ALLOC_UNITS},1.3.6.1.2.1.25.2.3.1.4,{#STORAGE_TYPE},1.3.6.1.2.1.25.2.3.1.2]</snmp_oid>
+                    <key>memory.discovery</key>
+                    <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                    <filter>
+                        <evaltype>FORMULA</evaltype>
+                        <formula>(A or B) and C</formula>
+                        <conditions>
+                            <condition>
+                                <macro>{#STORAGE_TYPE}</macro>
+                                <value>.+2$</value>
+                                <formulaid>B</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#STORAGE_TYPE}</macro>
+                                <value>.+hrStorageRam</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#SNMPVALUE}</macro>
+                                <value>^RAM$</value>
+                                <formulaid>C</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>{$LOST_RESOURCES_ARISTA_ENV}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Memory utilization: {#SNMPVALUE}</name>
+                            <type>CALCULATED</type>
+                            <key>vm.memory.pused[memoryUsedPercentage.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>%</units>
+                            <params>(last(vm.memory.units.used[hrStorageUsed.{#SNMPINDEX}])/last(vm.memory.units.total[hrStorageSize.{#SNMPINDEX}]))*100</params>
+                            <applications>
+                                <application>
+                                    <name>Memory</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$MEMORY_UTIL_MAX}</expression>
+                                    <name>High memory utilization: {#SNMPVALUE}</name>
+                                    <opdata>High memory utilization</opdata>
+                                    <priority>AVERAGE</priority>
+                                    <description>Last value: {ITEM.LASTVALUE1}.</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Total memory: {#SNMPVALUE}</name>
+                            <type>CALCULATED</type>
+                            <key>vm.memory.total[memoryTotal.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <units>B</units>
+                            <params>(last(vm.memory.units.total[hrStorageSize.{#SNMPINDEX}])*last(vm.memory.units[hrStorageAllocationUnits.{#SNMPINDEX}]))</params>
+                            <applications>
+                                <application>
+                                    <name>Memory</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Total memory in units: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.25.2.3.1.5.{#SNMPINDEX}</snmp_oid>
+                            <key>vm.memory.units.total[hrStorageSize.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                            <units>units</units>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Used memory in units: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.25.2.3.1.6.{#SNMPINDEX}</snmp_oid>
+                            <key>vm.memory.units.used[hrStorageUsed.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                            <units>units</units>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Memory units: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.25.2.3.1.4.{#SNMPINDEX}</snmp_oid>
+                            <key>vm.memory.units[hrStorageAllocationUnits.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Used memory: {#SNMPVALUE}</name>
+                            <type>CALCULATED</type>
+                            <key>vm.memory.used[memoryUsed.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <units>B</units>
+                            <params>(last(vm.memory.units.used[hrStorageUsed.{#SNMPINDEX}])*last(vm.memory.units[hrStorageAllocationUnits.{#SNMPINDEX}]))</params>
+                            <applications>
+                                <application>
+                                    <name>Memory</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Memory utilization: {#SNMPVALUE}</name>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <ymax_type_1>FIXED</ymax_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>vm.memory.pused[memoryUsedPercentage.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>PSU Status Discovery</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#ENT_CLASS},1.3.6.1.2.1.47.1.1.1.1.5,{#ENT_NAME},1.3.6.1.2.1.47.1.1.1.1.7,{#ENT_DESCR},1.3.6.1.2.1.47.1.1.1.1.2]</snmp_oid>
+                    <key>psu.discovery</key>
+                    <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#ENT_CLASS}</macro>
+                                <value>6</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#ENT_DESCR}</macro>
+                                <value>^PowerSupply[0-9][0-9]?$|^100$</value>
+                                <formulaid>B</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>{$LOST_RESOURCES_ARISTA_ENV}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>PSU input voltage: {#ENT_DESCR}</name>
+                            <type>EXTERNAL</type>
+                            <key>arista.voltage.snmp[{HOST.CONN},{$SNMP_COMMUNITY},1.3.6.1.2.1.99.1.1.1.4,{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <units>Volt</units>
+                            <applications>
+                                <application>
+                                    <name>Power Supply</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <params>0.01</params>
+                                </step>
+                            </preprocessing>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$PSU_VOLT_LOW_ARISTA_ENV}</expression>
+                                    <name>PSU input voltage under 200v: {#ENT_DESCR}</name>
+                                    <opdata>PSU input voltage under 200v</opdata>
+                                    <priority>AVERAGE</priority>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>PSU is DOWN: {#ENT_DESCR}</name>
+                                            <expression>{Arista Environment Core SNMP:sensor.psu.status[entStateOper.{#SNMPINDEX}].count(#1,{$PSU_CRIT_STATUS},eq)}=1</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PSU status: {#ENT_DESCR}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.131.1.1.1.3.{#SNMPINDEX}</snmp_oid>
+                            <key>sensor.psu.status[entStateOper.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                            <applications>
+                                <application>
+                                    <name>Power Supply</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>ENTITY-STATE-MIB::EntityOperState</name>
+                            </valuemap>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{count(#1,{$PSU_CRIT_STATUS},eq)}=1</expression>
+                                    <name>PSU is DOWN: {#ENT_DESCR}</name>
+                                    <opdata>PSU is DOWN</opdata>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>PSU input voltage: {#ENT_DESCR}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>FF0000</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>arista.voltage.snmp[{HOST.CONN},{$SNMP_COMMUNITY},1.3.6.1.2.1.99.1.1.1.4,{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>PSU status: {#ENT_DESCR}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.psu.status[entStateOper.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>Storage Discovery</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.2.1.25.2.3.1.3,{#ALLOC_UNITS},1.3.6.1.2.1.25.2.3.1.4,{#STORAGE_TYPE},1.3.6.1.2.1.25.2.3.1.2]</snmp_oid>
+                    <key>storage.discovery</key>
+                    <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                    <filter>
+                        <evaltype>OR</evaltype>
+                        <conditions>
+                            <condition>
+                                <macro>{#STORAGE_TYPE}</macro>
+                                <value>.+(4|9)$</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#STORAGE_TYPE}</macro>
+                                <value>.+(hrStorageFixedDisk|hrStorageFlashMemory)</value>
+                                <formulaid>B</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>{$LOST_RESOURCES_ARISTA_ENV}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Storage utilization: {#SNMPVALUE}</name>
+                            <type>CALCULATED</type>
+                            <key>vfs.fs.pused[storageUsedPercentage.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>%</units>
+                            <params>(last(vfs.fs.units.used[hrStorageUsed.{#SNMPINDEX}])/last(vfs.fs.units.total[hrStorageSize.{#SNMPINDEX}]))*100</params>
+                            <applications>
+                                <application>
+                                    <name>Storage</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$STORAGE_UTIL_CRIT}</expression>
+                                    <name>Free space is critically LOW: {#SNMPVALUE}</name>
+                                    <opdata>Free space is critically LOW</opdata>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$STORAGE_UTIL_WARN}</expression>
+                                    <name>Free space is LOW: {#SNMPVALUE}</name>
+                                    <opdata>Free space is LOW</opdata>
+                                    <priority>WARNING</priority>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>Free space is critically LOW: {#SNMPVALUE}</name>
+                                            <expression>{Arista Environment Core SNMP:vfs.fs.pused[storageUsedPercentage.{#SNMPINDEX}].last()}&gt;{$STORAGE_UTIL_CRIT}</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Total space: {#SNMPVALUE}</name>
+                            <type>CALCULATED</type>
+                            <key>vfs.fs.total[storageTotal.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <units>B</units>
+                            <params>(last(vfs.fs.units.total[hrStorageSize.{#SNMPINDEX}])*last(vfs.fs.units[hrStorageAllocationUnits.{#SNMPINDEX}]))</params>
+                            <applications>
+                                <application>
+                                    <name>Storage</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Total space in units: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.25.2.3.1.5.{#SNMPINDEX}</snmp_oid>
+                            <key>vfs.fs.units.total[hrStorageSize.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                            <units>units</units>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Used storage in units: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.25.2.3.1.6.{#SNMPINDEX}</snmp_oid>
+                            <key>vfs.fs.units.used[hrStorageUsed.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                            <units>units</units>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Storage units: {#SNMPVALUE}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.25.2.3.1.4.{#SNMPINDEX}</snmp_oid>
+                            <key>vfs.fs.units[hrStorageAllocationUnits.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Used space: {#SNMPVALUE}</name>
+                            <type>CALCULATED</type>
+                            <key>vfs.fs.used[storageUsed.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <units>B</units>
+                            <params>(last(vfs.fs.units.used[hrStorageUsed.{#SNMPINDEX}])*last(vfs.fs.units[hrStorageAllocationUnits.{#SNMPINDEX}]))</params>
+                            <applications>
+                                <application>
+                                    <name>Storage</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Storage used space: {#SNMPVALUE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>FF0000</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>vfs.fs.total[storageTotal.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>00FF00</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>vfs.fs.used[storageUsed.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Storage utilization: {#SNMPVALUE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>vfs.fs.pused[storageUsedPercentage.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>Temperature Discovery</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>discovery[{#SENSOR_TYPE},1.3.6.1.2.1.99.1.1.1.1,{#SENSOR_INFO},1.3.6.1.2.1.47.1.1.1.1.2,{#SENSOR_PRECISION},1.3.6.1.2.1.99.1.1.1.3,{#ENT_DESCR},1.3.6.1.2.1.47.1.1.1.1.2]</snmp_oid>
+                    <key>temp.discovery</key>
+                    <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                    <filter>
+                        <evaltype>AND</evaltype>
+                        <conditions>
+                            <condition>
+                                <macro>{#SENSOR_TYPE}</macro>
+                                <value>8</value>
+                                <formulaid>C</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#SENSOR_PRECISION}</macro>
+                                <value>1</value>
+                                <formulaid>B</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#SENSOR_INFO}</macro>
+                                <value>(Power supply sensor|ORing FET sensor|Ambient sensor|PFC sensor|Hotspot|Inlet|Exhaust|Primary hotspot|Secondary hotspot)</value>
+                                <operator>NOT_MATCHES_REGEX</operator>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>{$LOST_RESOURCES_ARISTA_ENV}</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Temperature sensor status: {#SENSOR_INFO}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.99.1.1.1.5.{#SNMPINDEX}</snmp_oid>
+                            <key>sensor.temp.status[entPhySensorOperStatus.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>0</trends>
+                            <applications>
+                                <application>
+                                    <name>Temperature</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>ENTITY-SENSORS-MIB::EntitySensorStatus</name>
+                            </valuemap>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Temperature: {#SENSOR_INFO}</name>
+                            <type>SNMPV2</type>
+                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <snmp_oid>1.3.6.1.2.1.99.1.1.1.4.{#SNMPINDEX}</snmp_oid>
+                            <key>sensor.temp.value[entPhySensorValue.{#SNMPINDEX}]</key>
+                            <delay>{$INTERVAL_ARISTA_ENV}</delay>
+                            <history>{$HISTORY_PERIOD_ARISTA_ENV}</history>
+                            <trends>{$TREND_PERIOD_ARISTA_ENV}</trends>
+                            <value_type>FLOAT</value_type>
+                            <units>°C</units>
+                            <applications>
+                                <application>
+                                    <name>Temperature</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <params>0.1</params>
+                                </step>
+                            </preprocessing>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;{$TEMP_CRIT:&quot;&quot;}</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{max(5m)}&lt;{$TEMP_CRIT:&quot;&quot;}-3</recovery_expression>
+                                    <name>Temperature is CRITICAL: {#SENSOR_INFO}</name>
+                                    <opdata>Temperature is CRITICAL</opdata>
+                                    <priority>HIGH</priority>
+                                    <description>Last value: {ITEM.LASTVALUE1}.&#13;
+This trigger uses temperature sensor values as well as temperature sensor status if available</description>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$TEMP_CRIT_LOW:&quot;&quot;}</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{min(5m)}&gt;{$TEMP_CRIT_LOW:&quot;&quot;}+3</recovery_expression>
+                                    <name>Temperature is LOW: {#SENSOR_INFO}</name>
+                                    <opdata>Temperature is LOW</opdata>
+                                    <priority>AVERAGE</priority>
+                                    <description>Last value: {ITEM.LASTVALUE1}.</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Arista Environment Core SNMP:sensor.temp.value[entPhySensorValue.{#SNMPINDEX}].last()}&gt;{$TEMP_WARN:&quot;&quot;}&#13;
+or&#13;
+{Arista Environment Core SNMP:sensor.temp.status[entPhySensorOperStatus.{#SNMPINDEX}].last()}={$TEMP_WARN_STATUS}</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>{Arista Environment Core SNMP:sensor.temp.value[entPhySensorValue.{#SNMPINDEX}].max(5m)}&lt;{$TEMP_WARN:&quot;&quot;}-3</recovery_expression>
+                            <name>Temperature is HIGH: {#SENSOR_INFO}</name>
+                            <opdata>Temperature is HIGH</opdata>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.&#13;
+This trigger uses temperature sensor values as well as temperature sensor status if available</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>Temperature is CRITICAL: {#SENSOR_INFO}</name>
+                                    <expression>{Arista Environment Core SNMP:sensor.temp.value[entPhySensorValue.{#SNMPINDEX}].last()}&gt;{$TEMP_CRIT:&quot;&quot;}</expression>
+                                    <recovery_expression>{Arista Environment Core SNMP:sensor.temp.value[entPhySensorValue.{#SNMPINDEX}].max(5m)}&lt;{$TEMP_CRIT:&quot;&quot;}-3</recovery_expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Temperature: {#SENSOR_INFO}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.temp.value[entPhySensorValue.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Temprature sensors status: {#SENSOR_INFO}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>2196F3</color>
+                                    <item>
+                                        <host>Arista Environment Core SNMP</host>
+                                        <key>sensor.temp.status[entPhySensorOperStatus.{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$CPU_UTIL_MAX}</macro>
+                    <value>90</value>
+                </macro>
+                <macro>
+                    <macro>{$FAN_CRIT_STATUS}</macro>
+                    <value>3</value>
+                </macro>
+                <macro>
+                    <macro>{$HISTORY_PERIOD_ARISTA_ENV}</macro>
+                    <value>365d</value>
+                    <description>History storage period</description>
+                </macro>
+                <macro>
+                    <macro>{$INTERVAL_ARISTA_ENV}</macro>
+                    <value>1m</value>
+                    <description>Update interval used in items/discovery rules</description>
+                </macro>
+                <macro>
+                    <macro>{$LOST_RESOURCES_ARISTA_ENV}</macro>
+                    <value>30d</value>
+                    <description>Keep lost resources period</description>
+                </macro>
+                <macro>
+                    <macro>{$MEMORY_UTIL_MAX}</macro>
+                    <value>95</value>
+                </macro>
+                <macro>
+                    <macro>{$PSU_CRIT_STATUS}</macro>
+                    <value>2</value>
+                </macro>
+                <macro>
+                    <macro>{$PSU_VOLT_LOW_ARISTA_ENV}</macro>
+                    <value>200</value>
+                    <description>PSU voltage low</description>
+                </macro>
+                <macro>
+                    <macro>{$STORAGE_UTIL_CRIT}</macro>
+                    <value>95</value>
+                </macro>
+                <macro>
+                    <macro>{$STORAGE_UTIL_WARN}</macro>
+                    <value>90</value>
+                </macro>
+                <macro>
+                    <macro>{$TEMP_CRIT}</macro>
+                    <value>50</value>
+                </macro>
+                <macro>
+                    <macro>{$TEMP_CRIT_LOW}</macro>
+                    <value>5</value>
+                </macro>
+                <macro>
+                    <macro>{$TEMP_WARN}</macro>
+                    <value>40</value>
+                </macro>
+                <macro>
+                    <macro>{$TEMP_WARN_STATUS}</macro>
+                    <value>3</value>
+                </macro>
+                <macro>
+                    <macro>{$TREND_PERIOD_ARISTA_ENV}</macro>
+                    <value>1095d</value>
+                    <description>Trend storage period</description>
+                </macro>
+            </macros>
+            <screens>
+                <screen>
+                    <name>Environment - CPU</name>
+                    <hsize>2</hsize>
+                    <vsize>100</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>CPU utilization {#DEVICE_DESCR}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+                <screen>
+                    <name>Environment - Fan speed</name>
+                    <hsize>2</hsize>
+                    <vsize>100</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Fan speed: {#SENSOR_INFO}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+                <screen>
+                    <name>Environment - Fan status</name>
+                    <hsize>2</hsize>
+                    <vsize>100</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Fan status: {#SENSOR_INFO}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+                <screen>
+                    <name>Environment - PSU status</name>
+                    <hsize>2</hsize>
+                    <vsize>100</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>PSU status: {#ENT_DESCR}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>PSU input voltage: {#ENT_DESCR}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+                <screen>
+                    <name>Environment - Storage</name>
+                    <hsize>2</hsize>
+                    <vsize>100</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Storage utilization: {#SNMPVALUE}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Storage used space: {#SNMPVALUE}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+                <screen>
+                    <name>Environment - Temprature</name>
+                    <hsize>2</hsize>
+                    <vsize>100</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Temperature: {#SENSOR_INFO}</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Temperature: {#SNMPVALUE} [1]</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Temperature: {#SNMPVALUE} [2]</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>2</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Temperature: {#SNMPVALUE} [3]</name>
+                                <host>Arista Environment Core SNMP</host>
+                            </resource>
+                            <width>600</width>
+                            <height>140</height>
+                            <x>0</x>
+                            <y>3</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>2</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+            </screens>
+        </template>
+    </templates>
+    <value_maps>
+        <value_map>
+            <name>ENTITY-SENSORS-MIB::EntitySensorStatus</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>ok</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>unavailable</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>nonoperational</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>ENTITY-STATE-MIB::EntityOperState</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>unknown</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>disabled</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>enabled</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>testing</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>
