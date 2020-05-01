@@ -1,0 +1,11 @@
+#!/bin/bash
+# Name         : as.name.ipv4
+# Date         : 31-03-2020
+# Purpose      : Get AS name/description for IPv4 address
+curl="https://ipapi.co/$1/org/"
+description=$(curl -s $curl)
+if [ "$description" == "Undefined" ]; then
+  printf 'N/A'
+else
+  printf "$description"
+fi
