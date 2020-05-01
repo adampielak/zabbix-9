@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-01T13:48:57Z</date>
+    <groups>
+        <group>
+            <name>WorldStream Racks</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Ping Racks ICMP</template>
+            <name>Ping Racks ICMP</name>
+            <description>Monitors:&#13;
+- Loss&#13;
+- Availability&#13;
+- Response time</description>
+            <groups>
+                <group>
+                    <name>WorldStream Racks</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>ICMP Status</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>ICMP ping</name>
+                    <type>SIMPLE</type>
+                    <key>icmpping</key>
+                    <delay>{$INTERVAL_RACKS_ICMP}</delay>
+                    <history>{$HISTORY_PERIOD_RACKS_ICMP}</history>
+                    <trends>{$TREND_PERIOD_RACKS_ICMP}</trends>
+                    <applications>
+                        <application>
+                            <name>ICMP Status</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Service state</name>
+                    </valuemap>
+                </item>
+                <item>
+                    <name>ICMP loss</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingloss</key>
+                    <delay>{$INTERVAL_RACKS_ICMP}</delay>
+                    <history>{$HISTORY_PERIOD_RACKS_ICMP}</history>
+                    <trends>{$TREND_PERIOD_RACKS_ICMP}</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <applications>
+                        <application>
+                            <name>ICMP Status</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;{$ICMP_LOSS_WARN} and {last()}&lt;100</expression>
+                            <name>ICMP ping loss is HIGH</name>
+                            <opdata>ICMP ping loss is HIGH</opdata>
+                            <priority>WARNING</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>ICMP ping is DOWN</name>
+                                    <expression>{Ping Racks ICMP:icmppingloss.last()}=100 and&#13;
+{Ping Racks ICMP:icmpping.last()}=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>ICMP response time</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingsec</key>
+                    <delay>{$INTERVAL_RACKS_ICMP}</delay>
+                    <history>{$HISTORY_PERIOD_RACKS_ICMP}</history>
+                    <trends>{$TREND_PERIOD_RACKS_ICMP}</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <applications>
+                        <application>
+                            <name>ICMP Status</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;{$ICMP_RESPONSE_TIME_WARN}</expression>
+                            <name>ICMP ping response time is HIGH</name>
+                            <opdata>ICMP ping response time is HIGH</opdata>
+                            <priority>WARNING</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>ICMP ping is DOWN</name>
+                                    <expression>{Ping Racks ICMP:icmppingloss.last()}=100 and&#13;
+{Ping Racks ICMP:icmpping.last()}=0</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>ICMP ping loss is HIGH</name>
+                                    <expression>{Ping Racks ICMP:icmppingloss.last()}&gt;{$ICMP_LOSS_WARN} and {Ping Racks ICMP:icmppingloss.last()}&lt;100</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <macros>
+                <macro>
+                    <macro>{$HISTORY_PERIOD_RACKS_ICMP}</macro>
+                    <value>7d</value>
+                    <description>History storage period</description>
+                </macro>
+                <macro>
+                    <macro>{$ICMP_LOSS_WARN}</macro>
+                    <value>20</value>
+                </macro>
+                <macro>
+                    <macro>{$ICMP_RESPONSE_TIME_WARN}</macro>
+                    <value>0.15</value>
+                </macro>
+                <macro>
+                    <macro>{$INTERVAL_RACKS_ICMP}</macro>
+                    <value>1m</value>
+                    <description>Update interval used in items/discovery rules</description>
+                </macro>
+                <macro>
+                    <macro>{$LOST_RESOURCES_RACKS_ICMP}</macro>
+                    <value>7d</value>
+                    <description>Keep lost resources period</description>
+                </macro>
+                <macro>
+                    <macro>{$TREND_PERIOD_RACKS_ICMP}</macro>
+                    <value>30d</value>
+                    <description>Trend storage period</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+    <triggers>
+        <trigger>
+            <expression>{Ping Racks ICMP:icmppingloss.last()}=100 and&#13;
+{Ping Racks ICMP:icmpping.last()}=0</expression>
+            <name>ICMP ping is DOWN</name>
+            <opdata>ICMP ping is DOWN</opdata>
+            <priority>HIGH</priority>
+        </trigger>
+    </triggers>
+    <value_maps>
+        <value_map>
+            <name>Service state</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>Down</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>Up</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>
