@@ -10,6 +10,6 @@ from jsonrpclib import Server
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # Do magic
-switch = Server( "https://admin:WqnAqwe23J@%s/command-api" % (sys.argv[1]))
+switch = Server( "https://admin:xxxxxxx@%s/command-api" % (sys.argv[1]))
 response = switch.runCmds( 1, ["show spanning-tree"] )
 print response[0]["spanningTreeInstances"]["MST0"]["bridge"]["priority"]
