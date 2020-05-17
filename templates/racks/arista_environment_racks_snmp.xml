@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-05-01T11:37:45Z</date>
+    <date>2020-05-17T13:39:03Z</date>
     <groups>
         <group>
             <name>WorldStream Racks</name>
@@ -24,6 +24,42 @@ ENTITY-MIB</description>
                     <name>Power Supply</name>
                 </application>
             </applications>
+            <items>
+                <item>
+                    <name>Device type</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>ENTITY-MIB::entPhysicalModelName.1</snmp_oid>
+                    <key>sensor.psu.arista.devicename</key>
+                    <delay>{$INTERVAL_ARISTA_ENV_RACKS}</delay>
+                    <history>{$HISTORY_PERIOD_ARISTA_ENV_RACKS}</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>HARDWARE</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Power Supply</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Software version</name>
+                    <type>SNMPV2</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>ENTITY-MIB::entPhysicalSoftwareRev.1</snmp_oid>
+                    <key>sensor.psu.arista.softwareversion</key>
+                    <delay>{$INTERVAL_ARISTA_ENV_RACKS}</delay>
+                    <history>{$HISTORY_PERIOD_ARISTA_ENV_RACKS}</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>SOFTWARE</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Power Supply</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
             <discovery_rules>
                 <discovery_rule>
                     <name>PSU Status Discovery</name>
@@ -70,7 +106,13 @@ ENTITY-MIB</description>
                                     <expression>{last()}=2</expression>
                                     <name>PSU is DOWN: {#ENT_DESCR}</name>
                                     <opdata>PSU is DOWN</opdata>
-                                    <priority>AVERAGE</priority>
+                                    <priority>HIGH</priority>
+                                    <tags>
+                                        <tag>
+                                            <tag>Arista</tag>
+                                            <value>{INVENTORY.HARDWARE}</value>
+                                        </tag>
+                                    </tags>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
@@ -85,7 +127,7 @@ ENTITY-MIB</description>
                 </macro>
                 <macro>
                     <macro>{$INTERVAL_ARISTA_ENV_RACKS}</macro>
-                    <value>1m</value>
+                    <value>5m</value>
                     <description>Update interval used in items/discovery rules</description>
                 </macro>
                 <macro>
