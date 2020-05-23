@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2020-05-22T14:47:47Z</date>
+    <date>2020-05-23T12:44:51Z</date>
     <groups>
         <group>
             <name>Zabbix servers</name>
@@ -9,8 +9,8 @@
     </groups>
     <templates>
         <template>
-            <template>Template App Zabbix Proxy</template>
-            <name>Template App Zabbix Proxy</name>
+            <template>Zabbix Proxy AGENT</template>
+            <name>Zabbix Proxy AGENT</name>
             <groups>
                 <group>
                     <name>Zabbix servers</name>
@@ -767,7 +767,7 @@
                             <style>0</style>
                             <resource>
                                 <name>Zabbix proxy performance</name>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>1400</width>
                             <height>200</height>
@@ -789,7 +789,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[wcache,values]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -811,7 +811,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[queue]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -833,7 +833,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,poller,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -855,7 +855,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,icmp pinger,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -877,7 +877,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,discoverer,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -899,7 +899,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,unreachable poller,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -921,7 +921,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,data sender,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -943,7 +943,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,housekeeper,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -965,7 +965,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,configuration syncer,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -987,7 +987,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,history syncer,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -1009,7 +1009,7 @@
                             <style>0</style>
                             <resource>
                                 <key>zabbix[process,self-monitoring,avg,busy]</key>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -1038,7 +1038,7 @@
                             <style>0</style>
                             <resource>
                                 <name>Zabbix proxy performance</name>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -1060,7 +1060,7 @@
                             <style>0</style>
                             <resource>
                                 <name>Zabbix data gathering process busy %</name>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -1082,7 +1082,7 @@
                             <style>0</style>
                             <resource>
                                 <name>Zabbix internal process busy %</name>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -1104,7 +1104,7 @@
                             <style>0</style>
                             <resource>
                                 <name>Zabbix cache usage, % used</name>
-                                <host>Template App Zabbix Proxy</host>
+                                <host>Zabbix Proxy AGENT</host>
                             </resource>
                             <width>600</width>
                             <height>140</height>
@@ -1135,7 +1135,7 @@
                 <graph_item>
                     <color>DD0000</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[rcache,buffer,pused]</key>
                     </item>
                 </graph_item>
@@ -1143,7 +1143,7 @@
                     <sortorder>1</sortorder>
                     <color>00DDDD</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[wcache,index,pused]</key>
                     </item>
                 </graph_item>
@@ -1151,7 +1151,7 @@
                     <sortorder>2</sortorder>
                     <color>3333FF</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[wcache,history,pused]</key>
                     </item>
                 </graph_item>
@@ -1159,7 +1159,7 @@
                     <sortorder>3</sortorder>
                     <color>00FF00</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[vmware,buffer,pused]</key>
                     </item>
                 </graph_item>
@@ -1173,7 +1173,7 @@
                 <graph_item>
                     <color>990099</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,trapper,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1181,7 +1181,7 @@
                     <sortorder>1</sortorder>
                     <color>990000</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,poller,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1189,7 +1189,7 @@
                     <sortorder>2</sortorder>
                     <color>0000EE</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,ipmi poller,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1197,7 +1197,7 @@
                     <sortorder>3</sortorder>
                     <color>FF33FF</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,discoverer,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1205,7 +1205,7 @@
                     <sortorder>4</sortorder>
                     <color>007700</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,icmp pinger,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1213,7 +1213,7 @@
                     <sortorder>5</sortorder>
                     <color>003300</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,http poller,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1221,7 +1221,7 @@
                     <sortorder>6</sortorder>
                     <color>33FFFF</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,unreachable poller,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1229,7 +1229,7 @@
                     <sortorder>7</sortorder>
                     <color>DD0000</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,java poller,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1238,7 +1238,7 @@
                     <color>000099</color>
                     <calc_fnc>ALL</calc_fnc>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,snmp trapper,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1246,7 +1246,7 @@
                     <sortorder>9</sortorder>
                     <color>00FF00</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,vmware collector,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1260,7 +1260,7 @@
                 <graph_item>
                     <color>FFAA00</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,housekeeper,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1268,7 +1268,7 @@
                     <sortorder>1</sortorder>
                     <color>990099</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,configuration syncer,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1276,7 +1276,7 @@
                     <sortorder>2</sortorder>
                     <color>EE0000</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,history syncer,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1284,7 +1284,7 @@
                     <sortorder>3</sortorder>
                     <color>FF66FF</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,self-monitoring,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1292,7 +1292,7 @@
                     <sortorder>4</sortorder>
                     <color>0000EE</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,heartbeat sender,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1300,7 +1300,7 @@
                     <sortorder>5</sortorder>
                     <color>00EE00</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,data sender,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1308,7 +1308,7 @@
                     <sortorder>6</sortorder>
                     <color>009999</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,task manager,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1316,7 +1316,7 @@
                     <sortorder>7</sortorder>
                     <color>BBBB00</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,ipmi manager,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1324,7 +1324,7 @@
                     <sortorder>8</sortorder>
                     <color>990000</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,preprocessing manager,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1332,7 +1332,7 @@
                     <sortorder>9</sortorder>
                     <color>008800</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[process,preprocessing worker,avg,busy]</key>
                     </item>
                 </graph_item>
@@ -1344,7 +1344,7 @@
                 <graph_item>
                     <color>008800</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[preprocessing_queue]</key>
                     </item>
                 </graph_item>
@@ -1357,7 +1357,7 @@
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>00C800</color>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[wcache,values]</key>
                     </item>
                 </graph_item>
@@ -1367,7 +1367,7 @@
                     <color>C80000</color>
                     <yaxisside>RIGHT</yaxisside>
                     <item>
-                        <host>Template App Zabbix Proxy</host>
+                        <host>Zabbix Proxy AGENT</host>
                         <key>zabbix[queue]</key>
                     </item>
                 </graph_item>
