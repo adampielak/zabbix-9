@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.4</version>
-    <date>2020-05-01T11:19:13Z</date>
+    <version>5.0</version>
+    <date>2020-06-10T12:13:21Z</date>
     <groups>
         <group>
             <name>WorldStream Core</name>
@@ -19,27 +19,21 @@ BGP4-MIB</description>
                     <name>WorldStream Core</name>
                 </group>
             </groups>
-            <applications>
-                <application>
-                    <name>BGP4 Peer(s)</name>
-                </application>
-            </applications>
             <discovery_rules>
                 <discovery_rule>
-                    <name>BGP4 Peer(s)</name>
-                    <type>SNMPV2</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <name>IPv4 BGP Peers</name>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE},BGP4-MIB::bgpPeerRemoteAddr]</snmp_oid>
                     <key>ciscoBgpPeerRemoteAddr</key>
                     <delay>{$INTERVAL_BGP_IPV4}</delay>
                     <lifetime>{$LOST_RESOURCES_BGP_IPV4}</lifetime>
                     <item_prototypes>
                         <item_prototype>
-                            <name>// ECHO PEER {#SNMPVALUE} //</name>
+                            <name>Peer: {#SNMPVALUE}</name>
                             <type>EXTERNAL</type>
                             <key>arista.echo.ipv4peers[&quot;{#SNMPVALUE}&quot;]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
-                            <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
+                            <history>1h</history>
                             <trends>0</trends>
                             <value_type>CHAR</value_type>
                             <description>Used to echo each BPG peer address for use in trigger</description>
@@ -52,171 +46,165 @@ BGP4-MIB</description>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>0</trends>
                             <value_type>CHAR</value_type>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Administrative status for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerAdminStatus.1.1.4.{#SNMPVALUE}</snmp_oid>
                             <key>ciscoBgpPeerAdminStatus[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                             <valuemap>
                                 <name>ciscoBgpPeerAdminStatus</name>
                             </valuemap>
                         </item_prototype>
                         <item_prototype>
                             <name>Established time for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerFsmEstablishedTime.1.1.4.{#SNMPVALUE}</snmp_oid>
                             <key>ciscoBgpPeerFsmEstablishedTime[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
                             <units>uptime</units>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Remote AS for peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerRemoteAs.1.1.4.{#SNMPVALUE}</snmp_oid>
                             <key>ciscoBgpPeerRemoteAs[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>0</trends>
                             <value_type>CHAR</value_type>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Operational status for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerState.1.1.4.{#SNMPVALUE}</snmp_oid>
                             <key>ciscoBgpPeerState[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                             <valuemap>
                                 <name>ciscoBgpPeerState</name>
                             </valuemap>
                         </item_prototype>
                         <item_prototype>
                             <name>In updates for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerInUpdates.1.1.4.{#SNMPVALUE}</snmp_oid>
                             <key>ciscoIPv4cbgpInUpdates[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
                             <units>In updates</units>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Out updates for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerOutUpdates.1.1.4.{#SNMPVALUE}</snmp_oid>
                             <key>ciscoIPv4cbgpOutUpdates[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
                             <units>Out Updates</units>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Prefixes out advertised for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PrefixOutPrefixes.1.1.4.{#SNMPVALUE}.1.1</snmp_oid>
                             <key>ciscoIPv4cbgpPeerPrefixAdvertised[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
                             <units>Prefix(es)</units>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Prefixes in accepted for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PrefixInPrefixesAccepted.1.1.4.{#SNMPVALUE}.1.1</snmp_oid>
                             <key>ciscoIPv4cbgpPeerPrefixesInAccepted[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
                             <units>Prefix(es)</units>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Prefixes in for IPv4 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PrefixInPrefixes.1.1.4.{#SNMPVALUE}.1.1</snmp_oid>
                             <key>ciscoIPv4cbgpPeerPrefixesIn[{#SNMPVALUE}]</key>
                             <delay>{$INTERVAL_BGP_IPV4}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV4}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV4}</trends>
                             <units>Prefix(es)</units>
-                            <applications>
-                                <application>
-                                    <name>BGP4 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv4 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
                             <expression>{IPv4 BGP SNMP:ciscoBgpPeerRemoteAs[{#SNMPVALUE}].last()}&gt;1 and&#13;
 {IPv4 BGP SNMP:arista.echo.ipv4peers[&quot;{#SNMPVALUE}&quot;].regexp({$IPV4_BGP_PEER_TRIGGER_IP})}=0 and&#13;
+{IPv4 BGP SNMP:as.name.ipv4[&quot;{#SNMPVALUE}&quot;].regexp(.*)}=0 and&#13;
 &#13;
 {IPv4 BGP SNMP:ciscoBgpPeerState[{#SNMPVALUE}].last()}=6 and&#13;
 {IPv4 BGP SNMP:ciscoIPv4cbgpPeerPrefixesIn[{#SNMPVALUE}].last()}&lt;0.8*{IPv4 BGP SNMP:ciscoIPv4cbgpPeerPrefixesIn[{#SNMPVALUE}].avg(86400)}</expression>
                             <name>IPv4 BGP peer: {#SNMPVALUE} has lost more than 20% of prefixes</name>
                             <opdata>IPv4 BGP peer has lost more than 20% of prefixes</opdata>
                             <priority>AVERAGE</priority>
+                            <description>ASN: {ITEM.LASTVALUE1}&#13;
+Description: {ITEM.VALUE3}</description>
                             <dependencies>
                                 <dependency>
                                     <name>No prefixes received for IPv4 peer: {#SNMPVALUE}</name>
@@ -231,24 +219,28 @@ BGP4-MIB</description>
                         <trigger_prototype>
                             <expression>{IPv4 BGP SNMP:ciscoBgpPeerRemoteAs[{#SNMPVALUE}].regexp({$IPV4_BGP_PEER_TRIGGER_ASN})}=0 and&#13;
 {IPv4 BGP SNMP:arista.echo.ipv4peers[&quot;{#SNMPVALUE}&quot;].regexp({$IPV4_BGP_PEER_TRIGGER_IP})}=0 and&#13;
+{IPv4 BGP SNMP:as.name.ipv4[&quot;{#SNMPVALUE}&quot;].regexp(.*)}=0 and&#13;
 &#13;
 {IPv4 BGP SNMP:ciscoBgpPeerState[{#SNMPVALUE}].last()}&lt;&gt;6 and&#13;
 {IPv4 BGP SNMP:ciscoBgpPeerAdminStatus[{#SNMPVALUE}].last()}=2</expression>
                             <name>IPv4 BGP peer: {#SNMPVALUE} is DOWN</name>
                             <opdata>IPv4 BGP peer is DOWN</opdata>
                             <priority>AVERAGE</priority>
-                            <description>Trigger for peer that has a remote AS not matching {$IPV4_BGP_PEER_TRIGGER_ASN} macro.</description>
+                            <description>ASN: {ITEM.LASTVALUE1}&#13;
+Description: {ITEM.VALUE3}</description>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{IPv4 BGP SNMP:ciscoBgpPeerRemoteAs[{#SNMPVALUE}].regexp({$IPV4_BGP_PEER_TRIGGER_ASN})}=1 and&#13;
 {IPv4 BGP SNMP:arista.echo.ipv4peers[&quot;{#SNMPVALUE}&quot;].regexp({$IPV4_BGP_PEER_TRIGGER_IP})}=0 and&#13;
+{IPv4 BGP SNMP:as.name.ipv4[&quot;{#SNMPVALUE}&quot;].regexp(.*)}=0 and&#13;
 &#13;
 {IPv4 BGP SNMP:ciscoBgpPeerState[{#SNMPVALUE}].last()}&lt;&gt;6 and&#13;
 {IPv4 BGP SNMP:ciscoBgpPeerAdminStatus[{#SNMPVALUE}].last()}=2</expression>
                             <name>IPv4 BGP peer: {#SNMPVALUE} is DOWN</name>
                             <opdata>IPv4 BGP peer is DOWN</opdata>
                             <priority>HIGH</priority>
-                            <description>Trigger for peer that has a remote AS matching {$IPV4_BGP_PEER_TRIGGER_ASN} macro.</description>
+                            <description>ASN: {ITEM.LASTVALUE1}&#13;
+Description: {ITEM.VALUE3}</description>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{IPv4 BGP SNMP:ciscoBgpPeerRemoteAs[{#SNMPVALUE}].last()}&gt;1 and&#13;
@@ -293,6 +285,14 @@ BGP4-MIB</description>
                                         <key>ciscoIPv4cbgpPeerPrefixAdvertised[{#SNMPVALUE}]</key>
                                     </item>
                                 </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>199C0D</color>
+                                    <item>
+                                        <host>IPv4 BGP SNMP</host>
+                                        <key>ciscoIPv4cbgpPeerPrefixAdvertised[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
                             </graph_items>
                         </graph_prototype>
                         <graph_prototype>
@@ -323,7 +323,7 @@ BGP4-MIB</description>
             <macros>
                 <macro>
                     <macro>{$HISTORY_PERIOD_BGP_IPV4}</macro>
-                    <value>365d</value>
+                    <value>7d</value>
                     <description>History storage period</description>
                 </macro>
                 <macro>
@@ -338,17 +338,17 @@ BGP4-MIB</description>
                 </macro>
                 <macro>
                     <macro>{$IPV4_BGP_PEER_TRIGGER_IP}</macro>
-                    <value>(10.10.10.5|10.10.10.6)</value>
+                    <value>(185.21.63.32|185.21.63.33|217.23.0.2)</value>
                     <description>IP's which are defined here will not be monitored via trigger</description>
                 </macro>
                 <macro>
                     <macro>{$LOST_RESOURCES_BGP_IPV4}</macro>
-                    <value>30d</value>
+                    <value>7d</value>
                     <description>Keep lost resources period</description>
                 </macro>
                 <macro>
                     <macro>{$TREND_PERIOD_BGP_IPV4}</macro>
-                    <value>1095d</value>
+                    <value>30d</value>
                     <description>Trend storage period</description>
                 </macro>
             </macros>
@@ -365,11 +365,11 @@ BGP4-MIB</description>
                                 <name>Prefixes in for IPv4 peer: {#SNMPVALUE}</name>
                                 <host>IPv4 BGP SNMP</host>
                             </resource>
-                            <width>600</width>
+                            <width>700</width>
                             <height>140</height>
                             <x>0</x>
                             <y>0</y>
-                            <colspan>2</colspan>
+                            <colspan>1</colspan>
                             <rowspan>1</rowspan>
                             <elements>0</elements>
                             <valign>0</valign>
@@ -378,7 +378,7 @@ BGP4-MIB</description>
                             <sort_triggers>0</sort_triggers>
                             <url/>
                             <application/>
-                            <max_columns>2</max_columns>
+                            <max_columns>1</max_columns>
                         </screen_item>
                         <screen_item>
                             <resourcetype>20</resourcetype>
@@ -387,11 +387,11 @@ BGP4-MIB</description>
                                 <name>Prefixes out for IPv4 peer: {#SNMPVALUE}</name>
                                 <host>IPv4 BGP SNMP</host>
                             </resource>
-                            <width>600</width>
+                            <width>700</width>
                             <height>140</height>
-                            <x>0</x>
-                            <y>1</y>
-                            <colspan>2</colspan>
+                            <x>1</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
                             <rowspan>1</rowspan>
                             <elements>0</elements>
                             <valign>0</valign>
@@ -400,7 +400,7 @@ BGP4-MIB</description>
                             <sort_triggers>0</sort_triggers>
                             <url/>
                             <application/>
-                            <max_columns>2</max_columns>
+                            <max_columns>1</max_columns>
                         </screen_item>
                     </screen_items>
                 </screen>
