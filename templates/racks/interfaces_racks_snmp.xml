@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.4</version>
-    <date>2020-05-01T13:48:34Z</date>
+    <version>5.0</version>
+    <date>2020-06-10T12:15:26Z</date>
     <groups>
         <group>
             <name>WorldStream Racks</name>
@@ -26,8 +26,7 @@ IF-MIB</description>
             <discovery_rules>
                 <discovery_rule>
                     <name>Network Interfaces</name>
-                    <type>SNMPV2</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#IFOPERSTATUS},IF-MIB::ifOperStatus,{#IFADMINSTATUS},IF-MIB::ifAdminStatus,{#IFALIAS},IF-MIB::ifAlias,{#IFNAME},IF-MIB::ifName,{#IFDESCR},IF-MIB::ifDescr,{#IFTYPE},IF-MIB::ifType]</snmp_oid>
                     <key>net.if.discovery</key>
                     <delay>{$INTERVAL_INTERFACES_RACK}</delay>
@@ -107,8 +106,7 @@ IF-MIB</description>
                     <item_prototypes>
                         <item_prototype>
                             <name>{#IFNAME}({#IFALIAS}): Errors Rx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifInErrors.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in.errors[ifInErrors.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_RACK}</delay>
@@ -130,8 +128,7 @@ For packet-oriented interfaces, the number of inbound packets that contained err
                         </item_prototype>
                         <item_prototype>
                             <name>{#IFNAME}({#IFALIAS}): Bit/s Incoming</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCInOctets.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in[ifHCInOctets.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_RACK}</delay>
@@ -158,8 +155,7 @@ The total number of octets received on the interface, including framing characte
                         </item_prototype>
                         <item_prototype>
                             <name>{#IFNAME}({#IFALIAS}): Errors Tx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifOutErrors.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out.errors[ifOutErrors.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_RACK}</delay>
@@ -181,8 +177,7 @@ For packet-oriented interfaces, the number of outbound packets that contained er
                         </item_prototype>
                         <item_prototype>
                             <name>{#IFNAME}({#IFALIAS}): Bit/s Outgoing</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCOutOctets.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out[ifHCOutOctets.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_RACK}</delay>
@@ -209,8 +204,7 @@ The total number of octets transmitted out of the interface, including framing c
                         </item_prototype>
                         <item_prototype>
                             <name>{#IFNAME}({#IFALIAS}): Speed</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHighSpeed.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.speed[ifHighSpeed.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_RACK}</delay>
@@ -285,7 +279,7 @@ An estimate of the interface's current bandwidth in units of 1,000,000 bits per 
             <macros>
                 <macro>
                     <macro>{$HISTORY_PERIOD_INTERFACES_RACK}</macro>
-                    <value>365d</value>
+                    <value>7d</value>
                     <description>History storage period</description>
                 </macro>
                 <macro>
@@ -307,7 +301,7 @@ An estimate of the interface's current bandwidth in units of 1,000,000 bits per 
                 </macro>
                 <macro>
                     <macro>{$LOST_RESOURCES_INTERFACES_RACK}</macro>
-                    <value>30d</value>
+                    <value>7d</value>
                     <description>Keep lost resources period</description>
                 </macro>
                 <macro>
@@ -343,7 +337,7 @@ An estimate of the interface's current bandwidth in units of 1,000,000 bits per 
                 </macro>
                 <macro>
                     <macro>{$NET.IF.IFNAME.NOT_MATCHES}</macro>
-                    <value>(^Software Loopback Interface|^NULL[0-9.]*$|^[Ll]o[0-9.]*$|^[Ss]ystem$|^Nu[0-9.]*$|^veth[0-9a-z]+$|docker[0-9]+|br-[a-z0-9]{12}|.*Stack.*|.*Vl.*|.*Loopback.*|.*Management.*|.*Vlan.*)</value>
+                    <value>(^Software Loopback Interface|^NULL[0-9.]*$|^[Ll]o[0-9.]*$|^[Ss]ystem$|^Nu[0-9.]*$|^veth[0-9a-z]+$|docker[0-9]+|br-[a-z0-9]{12}|.*Stack.*|.*Vl.*|.*Loopback.*|.*Management.*|.*Vlan.*|.*VLAN.*)</value>
                     <description>Filter out loopbacks, nulls, docker veth links and docker0 bridge by default</description>
                 </macro>
                 <macro>
@@ -366,7 +360,7 @@ An estimate of the interface's current bandwidth in units of 1,000,000 bits per 
                 </macro>
                 <macro>
                     <macro>{$TREND_PERIOD_INTERFACES_RACK}</macro>
-                    <value>1095d</value>
+                    <value>30d</value>
                     <description>Trend storage period</description>
                 </macro>
             </macros>
