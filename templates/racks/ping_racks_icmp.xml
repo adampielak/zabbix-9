@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.4</version>
-    <date>2020-05-01T13:48:57Z</date>
+    <version>5.0</version>
+    <date>2020-06-10T12:15:43Z</date>
     <groups>
         <group>
             <name>WorldStream Racks</name>
@@ -56,55 +56,21 @@
                             <name>ICMP Status</name>
                         </application>
                     </applications>
-                    <triggers>
-                        <trigger>
-                            <expression>{last()}&gt;{$ICMP_LOSS_WARN} and {last()}&lt;100</expression>
-                            <name>ICMP ping loss is HIGH</name>
-                            <opdata>ICMP ping loss is HIGH</opdata>
-                            <priority>WARNING</priority>
-                            <dependencies>
-                                <dependency>
-                                    <name>ICMP ping is DOWN</name>
-                                    <expression>{Ping Racks ICMP:icmppingloss.last()}=100 and&#13;
-{Ping Racks ICMP:icmpping.last()}=0</expression>
-                                </dependency>
-                            </dependencies>
-                        </trigger>
-                    </triggers>
                 </item>
                 <item>
-                    <name>ICMP response time</name>
-                    <type>SIMPLE</type>
-                    <key>icmppingsec</key>
+                    <name>Simpe SNMP check</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>SNMPv2-MIB::sysDescr.0</snmp_oid>
+                    <key>snmp.sysdescr</key>
                     <delay>{$INTERVAL_RACKS_ICMP}</delay>
-                    <history>{$HISTORY_PERIOD_RACKS_ICMP}</history>
-                    <trends>{$TREND_PERIOD_RACKS_ICMP}</trends>
-                    <value_type>FLOAT</value_type>
-                    <units>s</units>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
                     <applications>
                         <application>
                             <name>ICMP Status</name>
                         </application>
                     </applications>
-                    <triggers>
-                        <trigger>
-                            <expression>{last()}&gt;{$ICMP_RESPONSE_TIME_WARN}</expression>
-                            <name>ICMP ping response time is HIGH</name>
-                            <opdata>ICMP ping response time is HIGH</opdata>
-                            <priority>WARNING</priority>
-                            <dependencies>
-                                <dependency>
-                                    <name>ICMP ping is DOWN</name>
-                                    <expression>{Ping Racks ICMP:icmppingloss.last()}=100 and&#13;
-{Ping Racks ICMP:icmpping.last()}=0</expression>
-                                </dependency>
-                                <dependency>
-                                    <name>ICMP ping loss is HIGH</name>
-                                    <expression>{Ping Racks ICMP:icmppingloss.last()}&gt;{$ICMP_LOSS_WARN} and {Ping Racks ICMP:icmppingloss.last()}&lt;100</expression>
-                                </dependency>
-                            </dependencies>
-                        </trigger>
-                    </triggers>
                 </item>
             </items>
             <macros>
@@ -119,7 +85,7 @@
                 </macro>
                 <macro>
                     <macro>{$ICMP_RESPONSE_TIME_WARN}</macro>
-                    <value>0.15</value>
+                    <value>0.8</value>
                 </macro>
                 <macro>
                     <macro>{$INTERVAL_RACKS_ICMP}</macro>
@@ -141,8 +107,9 @@
     </templates>
     <triggers>
         <trigger>
-            <expression>{Ping Racks ICMP:icmppingloss.last()}=100 and&#13;
-{Ping Racks ICMP:icmpping.last()}=0</expression>
+            <expression>{Ping Racks ICMP:icmpping.last()}=0 and&#13;
+{Ping Racks ICMP:icmppingloss.last()}=100 and&#13;
+{Ping Racks ICMP:snmp.sysdescr.nodata(1)}=0</expression>
             <name>ICMP ping is DOWN</name>
             <opdata>ICMP ping is DOWN</opdata>
             <priority>HIGH</priority>
