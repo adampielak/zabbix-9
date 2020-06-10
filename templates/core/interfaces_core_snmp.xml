@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.4</version>
-    <date>2020-05-01T11:18:43Z</date>
+    <version>5.0</version>
+    <date>2020-06-10T12:13:02Z</date>
     <groups>
         <group>
             <name>WorldStream Core</name>
@@ -18,16 +18,10 @@ IF-MIB</description>
                     <name>WorldStream Core</name>
                 </group>
             </groups>
-            <applications>
-                <application>
-                    <name>Network interfaces</name>
-                </application>
-            </applications>
             <discovery_rules>
                 <discovery_rule>
                     <name>Network Interfaces</name>
-                    <type>SNMPV2</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#IFOPERSTATUS},IF-MIB::ifOperStatus,{#IFADMINSTATUS},IF-MIB::ifAdminStatus,{#IFALIAS},IF-MIB::ifAlias,{#IFNAME},IF-MIB::ifName,{#IFDESCR},IF-MIB::ifDescr,{#IFTYPE},IF-MIB::ifType]</snmp_oid>
                     <key>net.if.discovery</key>
                     <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -105,9 +99,8 @@ IF-MIB</description>
                     <lifetime>{$LOST_RESOURCES_INTERFACES_CORE}</lifetime>
                     <item_prototypes>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Broadcast Rx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Broadcast Rx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCInBroadcastPkts.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in.broadcastpkts[ifHCInBroadcastPkts.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -115,7 +108,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -126,9 +119,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Discards Rx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Discards Rx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifInDiscards.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in.discards[ifInDiscards.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -136,7 +128,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -147,9 +139,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Errors Rx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Errors Rx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifInErrors.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in.errors[ifInErrors.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -157,7 +148,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -168,9 +159,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Multicast Rx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Multicast Rx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCInMulticastPkts.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in.multicastpkts[ifHCInMulticastPkts.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -178,7 +168,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -189,9 +179,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Unicast Rx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Unicast Rx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCInUcastPkts.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in.unicastpkts[ifHCInUcastPkts.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -199,7 +188,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -210,9 +199,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Bit/s Incoming</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Bit/s Incoming</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCInOctets.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.in[ifHCInOctets.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -221,7 +209,7 @@ IF-MIB</description>
                             <units>bps</units>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -236,9 +224,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Broadcast Tx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Broadcast Tx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCOutBroadcastPkts.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out.broadcastpkts[ifHCOutBroadcastPkts.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -246,7 +233,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -257,9 +244,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Discards Tx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Discards Tx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifOutDiscards.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out.discards[ifOutDiscards.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -267,7 +253,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -278,9 +264,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Errors Tx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Errors Tx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifOutErrors.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out.errors[ifOutErrors.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -288,7 +273,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -299,9 +284,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Multicast Tx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Multicast Tx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCOutMulticastPkts.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out.multicastpkts[ifHCOutMulticastPkts.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -309,7 +293,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -320,9 +304,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Unicast Tx</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Unicast Tx</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCOutUcastPkts.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out.unicastpkts[ifHCOutUcastPkts.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -330,7 +313,7 @@ IF-MIB</description>
                             <trends>{$TREND_PERIOD_INTERFACES_CORE}</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -341,9 +324,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Bit/s Outgoing</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Bit/s Outgoing</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHCOutOctets.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.out[ifHCOutOctets.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -352,7 +334,7 @@ IF-MIB</description>
                             <units>bps</units>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -367,9 +349,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Speed</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Speed</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifHighSpeed.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.speed[ifHighSpeed.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -378,7 +359,7 @@ IF-MIB</description>
                             <units>bps</units>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <preprocessing>
@@ -393,9 +374,8 @@ IF-MIB</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Administrative status</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Administrative status</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifAdminStatus.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.status[ifAdminStatus.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -403,7 +383,7 @@ IF-MIB</description>
                             <trends>0</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <valuemap>
@@ -411,9 +391,8 @@ IF-MIB</description>
                             </valuemap>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Operational status</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Operational status</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifOperStatus.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.status[ifOperStatus.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -421,7 +400,7 @@ IF-MIB</description>
                             <trends>0</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <valuemap>
@@ -429,9 +408,8 @@ IF-MIB</description>
                             </valuemap>
                         </item_prototype>
                         <item_prototype>
-                            <name>{#IFNAME}({#IFALIAS}): Interface type</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <name>{#IFNAME} ({#IFALIAS}): Interface type</name>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>IF-MIB::ifType.{#SNMPINDEX}</snmp_oid>
                             <key>net.if.type[ifType.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_INTERFACES_CORE}</delay>
@@ -439,7 +417,7 @@ IF-MIB</description>
                             <trends>0</trends>
                             <application_prototypes>
                                 <application_prototype>
-                                    <name>Interface {#IFNAME}({#IFALIAS})</name>
+                                    <name>Interface: {#IFNAME} ({#IFALIAS})</name>
                                 </application_prototype>
                             </application_prototypes>
                             <valuemap>
@@ -481,7 +459,7 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                             <name>Link utilization is CRITICAL: {#IFNAME}</name>
                             <opdata>Link utilization is CRITICAL</opdata>
                             <priority>HIGH</priority>
-                            <description>INCOMING</description>
+                            <description>Incoming: {ITEM.LASTVALUE1}</description>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Interfaces Core SNMP:net.if.out[ifHCOutOctets.{#SNMPINDEX}].last()}&gt;({$IF.UTIL.CRIT:&quot;{#IFNAME}&quot;}/100)*{Interfaces Core SNMP:net.if.speed[ifHighSpeed.{#SNMPINDEX}].last()} and&#13;
@@ -491,7 +469,7 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                             <name>Link utilization is CRITICAL: {#IFNAME}</name>
                             <opdata>Link utilization is CRITICAL</opdata>
                             <priority>HIGH</priority>
-                            <description>OUTGOING</description>
+                            <description>Outgoing: {ITEM.LASTVALUE1}</description>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Interfaces Core SNMP:net.if.in[ifHCInOctets.{#SNMPINDEX}].last()}&gt;({$IF.UTIL.HIGH:&quot;{#IFNAME}&quot;}/100)*{Interfaces Core SNMP:net.if.speed[ifHighSpeed.{#SNMPINDEX}].last()} and&#13;
@@ -501,7 +479,7 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                             <name>Link utilization is HIGH: {#IFNAME}</name>
                             <opdata>Link utilization is HIGH</opdata>
                             <priority>WARNING</priority>
-                            <description>INCOMING</description>
+                            <description>Incoming: {ITEM.LASTVALUE1}</description>
                             <manual_close>YES</manual_close>
                             <dependencies>
                                 <dependency>
@@ -520,7 +498,15 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                             <name>Link utilization is HIGH: {#IFNAME}</name>
                             <opdata>Link utilization is HIGH</opdata>
                             <priority>WARNING</priority>
-                            <description>OUTGOING</description>
+                            <description>Outgoing: {ITEM.LASTVALUE1}</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>Link utilization is CRITICAL: {#IFNAME}</name>
+                                    <expression>{Interfaces Core SNMP:net.if.out[ifHCOutOctets.{#SNMPINDEX}].last()}&gt;({$IF.UTIL.CRIT:&quot;{#IFNAME}&quot;}/100)*{Interfaces Core SNMP:net.if.speed[ifHighSpeed.{#SNMPINDEX}].last()} and&#13;
+{Interfaces Core SNMP:net.if.speed[ifHighSpeed.{#SNMPINDEX}].last()}&gt;0</expression>
+                                    <recovery_expression>{Interfaces Core SNMP:net.if.out[ifHCOutOctets.{#SNMPINDEX}].last()}&lt;(({$IF.UTIL.CRIT:&quot;{#IFNAME}&quot;}-3)/100)*{Interfaces Core SNMP:net.if.speed[ifHighSpeed.{#SNMPINDEX}].last()}</recovery_expression>
+                                </dependency>
+                            </dependencies>
                         </trigger_prototype>
                     </trigger_prototypes>
                     <graph_prototypes>
@@ -644,7 +630,7 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
             <macros>
                 <macro>
                     <macro>{$HISTORY_PERIOD_INTERFACES_CORE}</macro>
-                    <value>365d</value>
+                    <value>7d</value>
                     <description>History storage period</description>
                 </macro>
                 <macro>
@@ -653,13 +639,13 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                 </macro>
                 <macro>
                     <macro>{$IF.UTIL.CRIT}</macro>
-                    <value>90</value>
-                    <description>90% of link capacity is being used</description>
+                    <value>95</value>
+                    <description>95% of link capacity is being used</description>
                 </macro>
                 <macro>
                     <macro>{$IF.UTIL.HIGH}</macro>
-                    <value>50</value>
-                    <description>50% of link capacity is being used</description>
+                    <value>80</value>
+                    <description>80% of link capacity is being used</description>
                 </macro>
                 <macro>
                     <macro>{$IFCONTROL}</macro>
@@ -672,7 +658,7 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                 </macro>
                 <macro>
                     <macro>{$LOST_RESOURCES_INTERFACES_CORE}</macro>
-                    <value>30d</value>
+                    <value>7d</value>
                     <description>Keep lost resources period</description>
                 </macro>
                 <macro>
@@ -703,8 +689,8 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                 </macro>
                 <macro>
                     <macro>{$NET.IF.IFNAME.MATCHES}</macro>
-                    <value>^Ethernet.*</value>
-                    <description>Only matches Ethernet interfaces</description>
+                    <value>(^Ethernet.*|Port-Channel.*)</value>
+                    <description>Only matches Ethernet &amp; Port-Channel interfaces</description>
                 </macro>
                 <macro>
                     <macro>{$NET.IF.IFNAME.NOT_MATCHES}</macro>
@@ -731,7 +717,7 @@ and {Interfaces Core SNMP:net.if.out.errors[ifOutErrors.{#SNMPINDEX}].max(5m)}&l
                 </macro>
                 <macro>
                     <macro>{$TREND_PERIOD_INTERFACES_CORE}</macro>
-                    <value>1095d</value>
+                    <value>30d</value>
                     <description>Trend storage period</description>
                 </macro>
             </macros>
