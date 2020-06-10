@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.4</version>
-    <date>2020-05-17T13:40:23Z</date>
+    <version>5.0</version>
+    <date>2020-06-10T12:15:10Z</date>
     <groups>
         <group>
             <name>WorldStream Racks</name>
@@ -23,41 +23,42 @@ FORCE10-TC</description>
             </groups>
             <applications>
                 <application>
+                    <name>Inventory</name>
+                </application>
+                <application>
                     <name>Power Supply</name>
                 </application>
             </applications>
             <items>
                 <item>
                     <name>Device type</name>
-                    <type>SNMPV2</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>F10-S-SERIES-CHASSIS-MIB::chStackUnitModelID.1</snmp_oid>
                     <key>sensor.psu.force10.devicename</key>
                     <delay>{$INTERVAL_F10_ENV_RACKS}</delay>
                     <history>{$HISTORY_PERIOD_F10_ENV_RACKS}</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <inventory_link>HARDWARE</inventory_link>
+                    <inventory_link>TYPE</inventory_link>
                     <applications>
                         <application>
-                            <name>Power Supply</name>
+                            <name>Inventory</name>
                         </application>
                     </applications>
                 </item>
                 <item>
                     <name>Software version</name>
-                    <type>SNMPV2</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>F10-S-SERIES-CHASSIS-MIB::chSysSwRuntimeImgVersion.1</snmp_oid>
                     <key>sensor.psu.force10.softwareversion</key>
                     <delay>{$INTERVAL_F10_ENV_RACKS}</delay>
                     <history>{$HISTORY_PERIOD_F10_ENV_RACKS}</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <inventory_link>SOFTWARE</inventory_link>
+                    <inventory_link>OS</inventory_link>
                     <applications>
                         <application>
-                            <name>Power Supply</name>
+                            <name>Inventory</name>
                         </application>
                     </applications>
                 </item>
@@ -65,8 +66,7 @@ FORCE10-TC</description>
             <discovery_rules>
                 <discovery_rule>
                     <name>PSU Status Discovery</name>
-                    <type>SNMPV2</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#PSU_NAME},F10-S-SERIES-CHASSIS-MIB::chSysPowerSupplyIndex.1]</snmp_oid>
                     <key>psu.force10.discovery</key>
                     <delay>{$INTERVAL_F10_ENV_RACKS}</delay>
@@ -74,8 +74,7 @@ FORCE10-TC</description>
                     <item_prototypes>
                         <item_prototype>
                             <name>PSU status: PowerSupply{#PSU_NAME}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>F10-S-SERIES-CHASSIS-MIB::chSysPowerSupplyOperStatus.1.{#SNMPINDEX}</snmp_oid>
                             <key>sensor.psu.force10.status[entStateOper.{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_F10_ENV_RACKS}</delay>
@@ -110,7 +109,7 @@ FORCE10-TC</description>
             <macros>
                 <macro>
                     <macro>{$HISTORY_PERIOD_F10_ENV_RACKS}</macro>
-                    <value>365d</value>
+                    <value>7d</value>
                     <description>History storage period</description>
                 </macro>
                 <macro>
@@ -120,12 +119,12 @@ FORCE10-TC</description>
                 </macro>
                 <macro>
                     <macro>{$LOST_RESOURCES_F10_ENV_RACKS}</macro>
-                    <value>30d</value>
+                    <value>7d</value>
                     <description>Keep lost resources period</description>
                 </macro>
                 <macro>
                     <macro>{$TREND_PERIOD_F10_ENV_RACKS}</macro>
-                    <value>1095d</value>
+                    <value>30d</value>
                     <description>Trend storage period</description>
                 </macro>
             </macros>
@@ -137,11 +136,15 @@ FORCE10-TC</description>
             <mappings>
                 <mapping>
                     <value>1</value>
-                    <newvalue>enabled</newvalue>
+                    <newvalue>up</newvalue>
                 </mapping>
                 <mapping>
                     <value>2</value>
-                    <newvalue>disabled</newvalue>
+                    <newvalue>down</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>absent</newvalue>
                 </mapping>
             </mappings>
         </value_map>
