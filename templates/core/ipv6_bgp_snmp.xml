@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>4.4</version>
-    <date>2020-05-01T11:19:36Z</date>
+    <version>5.0</version>
+    <date>2020-06-10T12:13:37Z</date>
     <groups>
         <group>
             <name>WorldStream Core</name>
@@ -18,25 +18,20 @@ ARISTA-BGP4V2-MIB</description>
                     <name>WorldStream Core</name>
                 </group>
             </groups>
-            <applications>
-                <application>
-                    <name>BGP6 Peer(s)</name>
-                </application>
-            </applications>
             <discovery_rules>
                 <discovery_rule>
-                    <name>BGP6 Peer(s)</name>
+                    <name>IPv6 BGP Peers</name>
                     <type>EXTERNAL</type>
-                    <key>arista.ipv6bgp.snmp[{HOST.CONN},{$SNMP_COMMUNITY}]</key>
+                    <key>arista.ipv6bgp.snmp[{HOST.CONN},{$SNMP_COMMUNITY_CORE}]</key>
                     <delay>{$INTERVAL_BGP_IPV6}</delay>
                     <lifetime>{$LOST_RESOURCES_BGP_IPV6}</lifetime>
                     <item_prototypes>
                         <item_prototype>
-                            <name>// ECHO PEER {#SNMPVALUE} //</name>
+                            <name>Peer: {#SNMPVALUE}</name>
                             <type>EXTERNAL</type>
                             <key>arista.echo.ipv6peers[&quot;{#SNMPVALUE}&quot;]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
-                            <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
+                            <history>1h</history>
                             <trends>0</trends>
                             <value_type>CHAR</value_type>
                             <description>Used to echo each BPG peer address for use in trigger</description>
@@ -49,156 +44,147 @@ ARISTA-BGP4V2-MIB</description>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>0</trends>
                             <value_type>CHAR</value_type>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>In updates for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerInUpdates{#SNMPINDEX}</snmp_oid>
                             <key>ciscoIPv6cbgpInUpdates[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
                             <units>In updates</units>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Out updates for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerOutUpdates{#SNMPINDEX}</snmp_oid>
                             <key>ciscoIPv6cbgpOutUpdates[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
                             <units>Out Updates</units>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Administrative status for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerAdminStatus{#SNMPINDEX}</snmp_oid>
                             <key>ciscoIPv6cbgpPeerAdminStatus[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                             <valuemap>
                                 <name>ciscoBgpPeerAdminStatus</name>
                             </valuemap>
                         </item_prototype>
                         <item_prototype>
                             <name>Established time for IPv6 peer: {#SNMPVALUE}`</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerFsmEstablishedTime{#SNMPINDEX}</snmp_oid>
                             <key>ciscoIPv6cbgpPeerFsmEstablishedTime[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
                             <units>uptime</units>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Prefixes in accepted for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PrefixInPrefixesAccepted{#SNMPINDEX}.2.1</snmp_oid>
                             <key>ciscoIPv6cbgpPeerPrefixAccepted[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
                             <units>Prefix(es)</units>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Prefixes out advertised for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PrefixOutPrefixes{#SNMPINDEX}.2.1</snmp_oid>
                             <key>ciscoIPv6cbgpPeerPrefixAdvertised[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
                             <units>Prefix(es)</units>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Prefixes in for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PrefixInPrefixes{#SNMPINDEX}.2.1</snmp_oid>
                             <key>ciscoIPv6cbgpPeerPrefixesIn[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
                             <units>Prefix(es)</units>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Remote AS for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerRemoteAs{#SNMPINDEX}</snmp_oid>
                             <key>ciscoIPv6cbgpPeerRemoteAs[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>0</trends>
                             <value_type>CHAR</value_type>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Operational status for IPv6 peer: {#SNMPVALUE}</name>
-                            <type>SNMPV2</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>ARISTA-BGP4V2-MIB::aristaBgp4V2PeerState{#SNMPINDEX}</snmp_oid>
                             <key>ciscoIPv6cbgpPeerState[{#SNMPINDEX}]</key>
                             <delay>{$INTERVAL_BGP_IPV6}</delay>
                             <history>{$HISTORY_PERIOD_BGP_IPV6}</history>
                             <trends>{$TREND_PERIOD_BGP_IPV6}</trends>
-                            <applications>
-                                <application>
-                                    <name>BGP6 Peer(s)</name>
-                                </application>
-                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>IPv6 BGP session: {#SNMPVALUE}</name>
+                                </application_prototype>
+                            </application_prototypes>
                             <valuemap>
                                 <name>ciscoBgpPeerState</name>
                             </valuemap>
@@ -229,24 +215,28 @@ ARISTA-BGP4V2-MIB</description>
                         <trigger_prototype>
                             <expression>{IPv6 BGP SNMP:ciscoIPv6cbgpPeerRemoteAs[{#SNMPINDEX}].regexp({$IPV6_BGP_PEER_TRIGGER_ASN})}=0 and&#13;
 {IPv6 BGP SNMP:arista.echo.ipv6peers[&quot;{#SNMPVALUE}&quot;].regexp({$IPV6_BGP_PEER_TRIGGER_IP})}=0 and&#13;
+{IPv6 BGP SNMP:as.name.ipv6[&quot;{#SNMPVALUE}&quot;].regexp(.*)}=0 and&#13;
 &#13;
 {IPv6 BGP SNMP:ciscoIPv6cbgpPeerState[{#SNMPINDEX}].last()}&lt;&gt;6 and&#13;
 {IPv6 BGP SNMP:ciscoIPv6cbgpPeerAdminStatus[{#SNMPINDEX}].last()}=2</expression>
                             <name>IPv6 BGP peer: {#SNMPVALUE} is DOWN</name>
                             <opdata>IPv6 BGP peer is DOWN</opdata>
                             <priority>AVERAGE</priority>
-                            <description>Trigger for peer that has a remote AS not matching {$IPV6_BGP_PEER_TRIGGER_ASN} macro.</description>
+                            <description>ASN: {ITEM.LASTVALUE1}&#13;
+Description: {ITEM.VALUE3}</description>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{IPv6 BGP SNMP:ciscoIPv6cbgpPeerRemoteAs[{#SNMPINDEX}].regexp({$IPV6_BGP_PEER_TRIGGER_ASN})}=1 and&#13;
 {IPv6 BGP SNMP:arista.echo.ipv6peers[&quot;{#SNMPVALUE}&quot;].regexp({$IPV6_BGP_PEER_TRIGGER_IP})}=0 and&#13;
+{IPv6 BGP SNMP:as.name.ipv6[&quot;{#SNMPVALUE}&quot;].regexp(.*)}=0 and&#13;
 &#13;
 {IPv6 BGP SNMP:ciscoIPv6cbgpPeerState[{#SNMPINDEX}].last()}&lt;&gt;6 and&#13;
 {IPv6 BGP SNMP:ciscoIPv6cbgpPeerAdminStatus[{#SNMPINDEX}].last()}=2</expression>
                             <name>IPv6 BGP peer: {#SNMPVALUE} is DOWN</name>
                             <opdata>IPv6 BGP peer is DOWN</opdata>
                             <priority>HIGH</priority>
-                            <description>Trigger for peer that has a remote AS matching {$IPV6_BGP_PEER_TRIGGER_ASN} macro.</description>
+                            <description>ASN: {ITEM.LASTVALUE1}&#13;
+Description: {ITEM.VALUE3}</description>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{IPv6 BGP SNMP:ciscoIPv6cbgpPeerRemoteAs[{#SNMPINDEX}].last()}&gt;1 and&#13;
@@ -318,7 +308,7 @@ ARISTA-BGP4V2-MIB</description>
             <macros>
                 <macro>
                     <macro>{$HISTORY_PERIOD_BGP_IPV6}</macro>
-                    <value>365d</value>
+                    <value>7d</value>
                     <description>History storage period</description>
                 </macro>
                 <macro>
@@ -338,12 +328,12 @@ ARISTA-BGP4V2-MIB</description>
                 </macro>
                 <macro>
                     <macro>{$LOST_RESOURCES_BGP_IPV6}</macro>
-                    <value>30d</value>
+                    <value>7d</value>
                     <description>Keep lost resources period</description>
                 </macro>
                 <macro>
                     <macro>{$TREND_PERIOD_BGP_IPV6}</macro>
-                    <value>1095d</value>
+                    <value>30d</value>
                     <description>Trend storage period</description>
                 </macro>
             </macros>
@@ -360,11 +350,11 @@ ARISTA-BGP4V2-MIB</description>
                                 <name>Prefixes in for IPv6 peer: {#SNMPVALUE}</name>
                                 <host>IPv6 BGP SNMP</host>
                             </resource>
-                            <width>600</width>
+                            <width>700</width>
                             <height>140</height>
                             <x>0</x>
                             <y>0</y>
-                            <colspan>2</colspan>
+                            <colspan>1</colspan>
                             <rowspan>1</rowspan>
                             <elements>0</elements>
                             <valign>0</valign>
@@ -373,7 +363,7 @@ ARISTA-BGP4V2-MIB</description>
                             <sort_triggers>0</sort_triggers>
                             <url/>
                             <application/>
-                            <max_columns>2</max_columns>
+                            <max_columns>1</max_columns>
                         </screen_item>
                         <screen_item>
                             <resourcetype>20</resourcetype>
@@ -382,11 +372,11 @@ ARISTA-BGP4V2-MIB</description>
                                 <name>Prefixes out for IPv6 peer: {#SNMPVALUE}</name>
                                 <host>IPv6 BGP SNMP</host>
                             </resource>
-                            <width>600</width>
+                            <width>700</width>
                             <height>140</height>
-                            <x>0</x>
-                            <y>1</y>
-                            <colspan>2</colspan>
+                            <x>1</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
                             <rowspan>1</rowspan>
                             <elements>0</elements>
                             <valign>0</valign>
@@ -395,7 +385,7 @@ ARISTA-BGP4V2-MIB</description>
                             <sort_triggers>0</sort_triggers>
                             <url/>
                             <application/>
-                            <max_columns>2</max_columns>
+                            <max_columns>1</max_columns>
                         </screen_item>
                     </screen_items>
                 </screen>
